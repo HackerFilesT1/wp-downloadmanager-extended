@@ -16,5 +16,6 @@ version (as of v1.60):
   template variables for binary file sizes (KiB/MiB/GiB/TiB);
 * Add sorting options for embedded download lists;
 * When rendering the post stream, make it possible to show only the top few
-  items of an embedded download list with a "More…" link that points to the
-  single post, wherein the complete embedded download list will be rendered;
+  items of an embedded download list, terminated with a "More…" link that
+  points to the single post, wherein the complete embedded download list will
+  be rendered;
