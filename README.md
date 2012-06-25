@@ -3,7 +3,7 @@ wp-downloadmanager-extended
 
 A fork of Lester Chan's (@gamerz) WP-DownloadManager plugin.
 
-The @gamerz's original version is at:
+@gamerz's original version is at:
 http://lesterchan.net/portfolio/programming/php/#wp-downloadmanager
 
 Synopsis
@@ -17,4 +17,4 @@ version (as of v1.60):
 * Add sorting options for embedded download lists;
 * When rendering the post stream, make it possible to show only the top few
   items of an embedded download list with a "More…" link that points to the
-  single post, wherein the completely embedded download list will be rendered;
+  single post, wherein the complete embedded download list will be rendered;
