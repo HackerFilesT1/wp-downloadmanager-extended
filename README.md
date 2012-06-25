@@ -28,6 +28,7 @@ To control the sorting of embedded downloads, specify two new attributes in the
 \[download\] tag:
 
 * *sort\_by* = the sorting criteria
+
   Valid values include:
 
     * file\_id (default)
@@ -39,6 +40,7 @@ To control the sorting of embedded downloads, specify two new attributes in the
 
   Any invalid value will be ignored and the default *file\_id* will be assumed.
 * *sort\_order* = ASCending or DESCending
+
   Valid values include:
 
     * asc (default)
