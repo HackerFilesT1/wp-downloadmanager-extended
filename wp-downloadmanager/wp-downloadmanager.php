@@ -472,7 +472,7 @@ function download_page_shortcode($atts) {
 ### Function: Short Code For Inserting Files Download Into Posts
 add_shortcode('download', 'download_shortcode');
 function download_shortcode($atts) {
-	extract(shortcode_atts(array('id' => '0', 'category' => '0', 'display' => 'both'), $atts));
+	extract(shortcode_atts(array('id' => '0', 'category' => '0', 'display' => 'both', 'sort_by' => 'file_id', 'sort_order' => 'asc'), $atts));
 	if(!is_feed()) {
 		$conditions = array();
 		if($id != '0') {
@@ -490,7 +490,7 @@ function download_shortcode($atts) {
 			}
 		}
 		if($conditions) {
-			return download_embedded(implode(' AND ', $conditions), $display);
+			return download_embedded(implode(' AND ', $conditions), $display, $sort_by, $sort_order);
 		}
 		else {
 			return '';
@@ -994,14 +994,21 @@ function get_download_hits($display = true) {
 
 
 ### Function: Download Embedded
-function download_embedded($condition = '', $display = 'both') {
+function download_embedded($condition = '', $display = 'both', $sort_by = 'file_id', $sort_order = 'asc') {
 	global $wpdb, $user_ID;
+	$valid_sort_by = array('file_id', 'file', 'file_name', 'file_size', 'file_date', 'file_hits');
+	$valid_sort_order = array('asc', 'desc');
+	if (!in_array($sort_by, $valid_sort_by)) {
+		$sort_by = 'file_id';
+	}
+	if (!in_array($sort_order, $valid_sort_order)) {
+		$sort_order = 'asc';
+	}
 	$output = '';
 	if($condition !== '') {
 		$condition .= ' AND ';
 	}
-	$file_sort = get_option('download_sort');
-	$files = $wpdb->get_results("SELECT * FROM $wpdb->downloads WHERE $condition file_permission != -2 ORDER BY {$file_sort['by']} {$file_sort['order']}");
+	$files = $wpdb->get_results("SELECT * FROM $wpdb->downloads WHERE $condition file_permission != -2 ORDER BY {$sort_by} {$sort_order}");
 	if($files) {
 		$current_user = wp_get_current_user();
 		$file_extensions_images = file_extension_images();
