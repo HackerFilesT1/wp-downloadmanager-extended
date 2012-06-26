@@ -21,6 +21,9 @@ version (as of v1.60):
   points to the single post, wherein the complete embedded download list will
   be rendered;
 
+A final, difficult challenge would be to either paginate embedded downloads or
+request more results using AJAX.
+
 Sorting Embedded Downloads
 --------------------------
 
