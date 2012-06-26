@@ -59,7 +59,7 @@ Example:
   would take up too much vertical space, so you want to limit the number to
   five. This is the tag that you would use:
 
-    \[download category="2" stream\_limit="5"\]
+    [download category="2" stream_limit="5"]
 
   So, in the post stream, you will only see the top five items in category 2:
 
