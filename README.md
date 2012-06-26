@@ -27,7 +27,7 @@ Sorting Embedded Downloads
 To control the sorting of embedded downloads, specify two new attributes in the
 \[download\] tag:
 
-* *sort\_by* = the sorting criteria
+* *sort_by* = the sorting criteria
 
   Valid values include:
 
@@ -38,8 +38,8 @@ To control the sorting of embedded downloads, specify two new attributes in the
     * file\_date
     * file\_hits
 
-  Any invalid value will be ignored and the default *file\_id* will be assumed.
-* *sort\_order* = ASCending or DESCending
+  Any invalid value will be ignored and the default *file_id* will be assumed.
+* *sort_order* = ASCending or DESCending
 
   Valid values include:
 
@@ -47,3 +47,34 @@ To control the sorting of embedded downloads, specify two new attributes in the
     * desc
 
   Any invalid value will be ignored and the default *asc* will be assumed.
+
+Limiting the Number of Embedded Downloads in the Post Stream
+------------------------------------------------------------
+
+To limit the number of embedded downloads displayed in the post stream, use the
+new *stream_limit* attribute in the \[download\] tag.
+
+Example:
+  You have twenty files in category 2. Displaying them all in the post stream
+  would take up too much vertical space, so you want to limit the number to
+  five. This is the tag that you would use:
+
+    \[download category="2" stream\_limit="5"\]
+
+  So, in the post stream, you will only see the top five items in category 2:
+
+    report1.pdf
+    report2.pdf
+    report3.pdf
+    report4.pdf
+    report5.pdf
+
+    More …
+
+  The "More …" link points to the single post. So you can see the complete
+  embedded download list in the single post.
+
+Valid values for *stream_limit* are positive integers and zero (0), where zero
+means no limit. Floating points, etc will be cast to an integer using the PHP
+(int) casting, with zero (0) being the lowest value. Non-numeric values will be
+ignored and zero (0) will be assumed.

@@ -472,7 +472,7 @@ function download_page_shortcode($atts) {
 ### Function: Short Code For Inserting Files Download Into Posts
 add_shortcode('download', 'download_shortcode');
 function download_shortcode($atts) {
-	extract(shortcode_atts(array('id' => '0', 'category' => '0', 'display' => 'both', 'sort_by' => 'file_id', 'sort_order' => 'asc'), $atts));
+	extract(shortcode_atts(array('id' => '0', 'category' => '0', 'display' => 'both', 'sort_by' => 'file_id', 'sort_order' => 'asc', 'stream_limit' => '0'), $atts));
 	if(!is_feed()) {
 		$conditions = array();
 		if($id != '0') {
@@ -490,7 +490,7 @@ function download_shortcode($atts) {
 			}
 		}
 		if($conditions) {
-			return download_embedded(implode(' AND ', $conditions), $display, $sort_by, $sort_order);
+			return download_embedded(implode(' AND ', $conditions), $display, $sort_by, $sort_order, $stream_limit);
 		}
 		else {
 			return '';
@@ -994,7 +994,7 @@ function get_download_hits($display = true) {
 
 
 ### Function: Download Embedded
-function download_embedded($condition = '', $display = 'both', $sort_by = 'file_id', $sort_order = 'asc') {
+function download_embedded($condition = '', $display = 'both', $sort_by = 'file_id', $sort_order = 'asc', $stream_limit = '0') {
 	global $wpdb, $user_ID;
 	$valid_sort_by = array('file_id', 'file', 'file_name', 'file_size', 'file_date', 'file_hits');
 	$valid_sort_order = array('asc', 'desc');
@@ -1004,17 +1004,43 @@ function download_embedded($condition = '', $display = 'both', $sort_by = 'file_
 	if (!in_array($sort_order, $valid_sort_order)) {
 		$sort_order = 'asc';
 	}
+	if (is_numeric($stream_limit)) {
+		$stream_limit = (int) $stream_limit;
+		if ($stream_limit < 0)
+		{
+			$stream_limit = 0;
+		}
+	}
+	else {
+		$stream_limit = 0;
+	}
 	$output = '';
 	if($condition !== '') {
 		$condition .= ' AND ';
 	}
-	$files = $wpdb->get_results("SELECT * FROM $wpdb->downloads WHERE $condition file_permission != -2 ORDER BY {$sort_by} {$sort_order}");
+	$query_string = "SELECT * FROM $wpdb->downloads WHERE $condition file_permission != -2 ORDER BY {$sort_by} {$sort_order}";
+	if (!is_single() && $stream_limit != 0) {
+		// We don't need to retrieve ALL matching files, we just need to know if there are more files than $stream_limit.
+		// This can cut down on memory usage if there are many many matching files but the $stream_limit is relatively small.
+		$query_limit = $stream_limit + 1;
+		$query_string .= " LIMIT {$query_limit}";
+	}
+	$files = $wpdb->get_results($query_string);
 	if($files) {
 		$current_user = wp_get_current_user();
 		$file_extensions_images = file_extension_images();
 		$download_categories = get_option('download_categories');
 		$template_download_embedded_temp = get_option('download_template_embedded');
-		foreach($files as $file) {
+		if (is_single() || $stream_limit == 0)
+		{
+			$stream_limit = count($files);
+		}
+		else
+		{
+			$stream_limit = min($stream_limit, count($files));
+		}
+		for ($i = 0; $i < $stream_limit; $i++) {
+			$file = $files[$i];
 			$file_permission = intval($file->file_permission);
 			$template_download_embedded = $template_download_embedded_temp;
 			if(($file_permission > 0 && intval($current_user->wp_user_level) >= $file_permission && intval($user_ID) > 0) || ($file_permission == 0 && intval($user_ID) > 0) || $file_permission == -1) {
@@ -1041,7 +1067,10 @@ function download_embedded($condition = '', $display = 'both', $sort_by = 'file_
 			$template_download_embedded = str_replace("%FILE_UPDATED_TIME%",  mysql2date(get_option('time_format'), gmdate('Y-m-d H:i:s', $file->file_updated_date)), $template_download_embedded);
 			$template_download_embedded = str_replace("%FILE_HITS%", number_format_i18n($file->file_hits), $template_download_embedded);
 			$template_download_embedded = str_replace("%FILE_DOWNLOAD_URL%", download_file_url($file->file_id, $file->file), $template_download_embedded);	
-			$output .= $template_download_embedded; 
+			$output .= $template_download_embedded;
+		}
+		if (!is_single() && $stream_limit != 0 && $stream_limit < count($files)) {
+			$output .= '<p><a href="' . get_permalink() . '">More …</a></p>';
 		}
 		return apply_filters('download_embedded', $output);
 	}
