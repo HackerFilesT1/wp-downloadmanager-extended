@@ -25,7 +25,7 @@ Sorting Embedded Downloads
 --------------------------
 
 To control the sorting of embedded downloads, specify two new attributes in the
-\[download\] tag:
+\[download\] shortcode:
 
 * *sort_by* = the sorting criteria
 
@@ -52,12 +52,12 @@ Limiting the Number of Embedded Downloads in the Post Stream
 ------------------------------------------------------------
 
 To limit the number of embedded downloads displayed in the post stream, use the
-new *stream_limit* attribute in the \[download\] tag.
+new *stream_limit* attribute in the \[download\] shortcode.
 
 Example:
   You have twenty files in category 2. Displaying them all in the post stream
   would take up too much vertical space, so you want to limit the number to
-  five. This is the tag that you would use:
+  five. This is the shortcode that you would use:
 
     [download category="2" stream_limit="5"]
 
