@@ -81,3 +81,10 @@ Valid values for *stream_limit* are positive integers and zero (0), where zero
 means no limit. Floating points, etc will be cast to an integer using the PHP
 (int) casting, with zero (0) being the lowest value. Non-numeric values will be
 ignored and zero (0) will be assumed.
+
+License
+-------
+
+This plugin inherits the GPLv2 license under which the original
+WP-DownloadManager plugin was released by Lester Chan. I have included the full
+license text in wp-downloadmanager/gpl-2.0.txt.

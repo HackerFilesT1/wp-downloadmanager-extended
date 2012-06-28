@@ -2,8 +2,8 @@
 /*
 +----------------------------------------------------------------------+
 |																									|
-|	WordPress 2.8 Plugin: WP-DownloadManager 1.60								|
-|	Copyright (c) 2009 Lester "GaMerZ" Chan											|
+|	WordPress 2.8 Plugin: WP-DownloadManager 1.60.1								|
+|	Copyright (c) 2012 Ka Lun "Kal" Sze											|
 |																									|
 |	File Written By:																			|
 |	- Lester "GaMerZ" Chan																	|

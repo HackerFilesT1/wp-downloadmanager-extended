@@ -1,17 +1,17 @@
 <?php
 /*
 Plugin Name: WP-DownloadManager
-Plugin URI: http://lesterchan.net/portfolio/programming/php/
-Description: Adds a simple download manager to your WordPress blog.
-Version: 1.60
-Author: Lester 'GaMerZ' Chan
-Author URI: http://lesterchan.net
+Plugin URI: https://github.com/ksze/wp-downloadmanager-extended
+Description: A fork of Lester 'GaMerZ' Chan's (@gamerz) WP-DownloadManager plugin
+Version: 1.60.1
+Author: Ka Lun 'Kal' Sze (@k_sze)
+Author URI: http://twitter.com/k_sze
 */
 
 
 /*  
-	Copyright 2009  Lester Chan  (email : lesterchan@gmail.com)
-
+	Copyright 2012 Ka Lun Sze (e-mail: swordangel@gmail.com)
+	based on code by Lester Chan copyright (C) 2009 (e-mail: lesterchan@gmail.com) WP-DownloadManager
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
@@ -25,6 +25,8 @@ Author URI: http://lesterchan.net
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+	The full GPLv2 license is in the file gpl-2.0.txt.
 */
 
 
